@@ -1879,6 +1879,7 @@ class APIClient(APIClientBase):
         *,
         stop_tilt: bool = False,
         toggle: bool = False,
+        speed: str | None = None,
     ) -> None:
         connection = self._get_connection()
         req = CoverCommandRequest(key=key, device_id=device_id)
@@ -1898,6 +1899,9 @@ class APIClient(APIClientBase):
                 req.stop_tilt = stop_tilt
             if toggle:
                 req.toggle = toggle
+            if speed is not None:
+                req.has_speed = True
+                req.speed = speed
         elif stop:
             req.legacy_command = LegacyCoverCommand.STOP
             req.has_legacy_command = True

@@ -485,6 +485,12 @@ def test_cover_info_supports_toggle(supports_toggle: bool) -> None:
     assert CoverInfo.from_pb(pb).supports_toggle is supports_toggle
 
 
+def test_cover_info_supported_speeds() -> None:
+    pb = ListEntitiesCoverResponse(key=1, supported_speeds=["slow", "fast"])
+    assert CoverInfo.from_pb(pb).supported_speeds == ["slow", "fast"]
+    assert CoverInfo.from_pb(ListEntitiesCoverResponse(key=1)).supported_speeds == []
+
+
 @pytest.mark.parametrize(
     ("state", "version", "out"),
     [

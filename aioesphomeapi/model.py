@@ -650,6 +650,7 @@ class CoverInfo(EntityInfo):
     supports_tilt: bool = False
     device_class: str = ""
     supports_stop_tilt: bool = False
+    supported_speeds: list[str] = converter_field(default_factory=list, converter=list)
 
 
 class LegacyCoverState(APIIntEnum):

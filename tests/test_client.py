@@ -769,6 +769,15 @@ async def test_subscribe_states_camera_oversized_done_chunk_does_not_tombstone(
         ),
         # Toggle has no legacy command, so nothing is sent for it
         ({"key": 1, "toggle": True}, {"key": 1}),
+        # Speed has no legacy field, so only the open command is sent
+        (
+            {"key": 1, "position": 1.0, "speed": "slow"},
+            {
+                "key": 1,
+                "has_legacy_command": True,
+                "legacy_command": LegacyCoverCommand.OPEN,
+            },
+        ),
     ],
 )
 async def test_cover_command_legacy(
@@ -796,6 +805,16 @@ async def test_cover_command_legacy(
         ({"key": 1, "stop": True}, {"key": 1, "stop": True}),
         ({"key": 1, "stop_tilt": True}, {"key": 1, "stop_tilt": True}),
         ({"key": 1, "toggle": True}, {"key": 1, "toggle": True}),
+        (
+            {"key": 1, "position": 1.0, "speed": "slow"},
+            {
+                "key": 1,
+                "has_position": True,
+                "position": 1.0,
+                "has_speed": True,
+                "speed": "slow",
+            },
+        ),
         (
             {"key": 1, "position": 1.0, "tilt": 0.8},
             {
